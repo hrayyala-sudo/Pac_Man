@@ -2,17 +2,17 @@ import streamlit as st
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="Retro Pac-Man Arcade",
+    page_title="Retro Pac-Man Arcade Arena",
     page_icon="🕹️",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# Initialize global arcade stats session state
+# Initialize global arcade token session state
 if "arcade_plays" not in st.session_state:
     st.session_state.arcade_plays = 0
 
-# --- ARCADE STYLE & NEON GLOW THEME ---
+# --- ARCADE STYLE & CYBERPUNK NEON THEME ---
 st.markdown("""
     <style>
     /* Sleek cyber-grid arcade background */
@@ -30,13 +30,13 @@ st.markdown("""
         text-align: center;
     }
     
-    /* Custom High-Score metrics styling */
+    /* Custom Score metrics layout styling */
     div[data-testid="stMetricValue"] {
         color: #FFDD00 !important;
         font-family: 'Courier New', monospace;
     }
     
-    /* Retro Token Insert Button */
+    /* Retro Token Insert Button styling */
     .stButton>button {
         background-color: #00D2FF !important;
         color: #0A0813 !important;
@@ -58,12 +58,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- ARCADE CABEZA HEADER ---
+# --- ARCADE MAIN CABINET HEADER ---
 st.title("🕹️ RETRO ARCADE ARENA")
-st.write("<center>Welcome to the ultimate quarter-muncher interface. Insert your token below and clear the maze!</center>", unsafe_allow_html=True)
+st.write("<center>Welcome to the ultimate arcade machine cabinet interface. Insert your token below and clear the maze!</center>", unsafe_allow_html=True)
 st.divider()
 
-# --- STATS & TOKEN SYSTEM BANNER ---
+# --- STATS & TOKEN HUD SYSTEM BANNER ---
 col_hud1, col_hud2, col_hud3 = st.columns(3)
 
 with col_hud1:
@@ -74,13 +74,13 @@ with col_hud3:
     st.write("<br>", unsafe_allow_html=True)
     if st.button("🪙 INSERT TOKEN / RESET"):
         st.session_state.arcade_plays += 1
-        st.toast("Token Accepted! Play system initialized.", icon="🎮")
+        st.toast("Token Accepted! Cabinet initialization sequence complete.", icon="🎮")
         st.rerun()
 
 st.write(" ")
 
 # --- OFFICIAL EMBEDDED ARCADE CABINET ENGINE ---
-# Renders a pristine cross-origin unblocked full fidelity audio/visual Pacman simulator canvas 
+# Renders a pristine cross-origin unblocked full fidelity Pacman simulator canvas 
 pacman_arcade_frame = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
     <iframe 
@@ -94,10 +94,10 @@ pacman_arcade_frame = """
 </div>
 """
 
-# Inject the canvas directly into the application layout window
+# Inject the canvas directly into the application frame layout window
 st.components.v1.html(pacman_arcade_frame, height=470)
 
-# --- CAB PLAY INSTRUCTIONS ---
+# --- CABINET PLAY INSTRUCTIONS ---
 st.write("---")
 st.markdown("""
 ### ⌨️ HOW TO CONTROL PAC-MAN
@@ -106,7 +106,18 @@ st.markdown("""
 3. Eat all flashing **Power Pellets** to temporarily turn the ghost matrix vulnerable!
 """)
 
-# --- CUSTOMER REVIEW FEEDBACK WIDGET ---
+# --- DOCUMENTATION EXTENSION CORNER (UNBLOCKABLE LINK METHOD) ---
+st.divider()
+st.subheader("📖 Arcade & Repository Manual")
+st.write("Want to fork this project on GitHub or learn how to deploy similar browser-optimized retro scripts?")
+
+col_link1, col_link2 = st.columns(2)
+with col_link1:
+    st.link_button("Open GitHub Documentation 🚀", "https://github.com", use_container_width=True)
+with col_link2:
+    st.link_button("Open Streamlit Deploy Guide 📑", "https://streamlit.io", use_container_width=True)
+
+# --- ARCADE GUESTBOOK FEEDBACK WIDGET ---
 st.divider()
 st.subheader("💬 Arcade Guestbook")
 feedback = st.text_input("Leave a comment or claim your high score signature tag:", placeholder="AAA - Scored 150k!...")
@@ -114,4 +125,4 @@ if feedback:
     st.success(f"Successfully recorded to machine log: *\"{feedback}\"*")
 
 # --- CABINET SYSTEM FOOTER ---
-st.markdown("<br><center>⚙️ Cabinet Emulation Stack Powered by Streamlit Components</center>", unsafe_allow_html=True)
+st.markdown("<br><hr><center>⚙️ Cabinet Emulation Stack Powered Natively by Streamlit Components</center>", unsafe_allow_html=True)
