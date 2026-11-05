@@ -74,7 +74,7 @@ with col_hud3:
     st.write("<br>", unsafe_allow_html=True)
     if st.button("🪙 INSERT TOKEN / RESET"):
         st.session_state.arcade_plays += 1
-        st.toast("Token Accepted! Cabinet initialization sequence complete.", icon="🎮")
+        st.toast("Token Accepted! Cabinet initialization sequence complete.", icon="`🕹️`")
         st.rerun()
 
 st.write(" ")
@@ -113,6 +113,7 @@ st.write("Want to fork this project on GitHub or learn how to deploy similar bro
 
 col_link1, col_link2 = st.columns(2)
 with col_link1:
+    # Safe link buttons open external resources smoothly in a completely fresh browser tab
     st.link_button("Open GitHub Documentation 🚀", "https://github.com", use_container_width=True)
 with col_link2:
     st.link_button("Open Streamlit Deploy Guide 📑", "https://streamlit.io", use_container_width=True)
