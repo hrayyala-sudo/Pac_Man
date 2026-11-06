@@ -80,7 +80,7 @@ with col_hud3:
 st.write(" ")
 
 # --- OFFICIAL EMBEDDED ARCADE CABINET ENGINE ---
-# This frame points directly to an unblocked, cross-origin safe full-fidelity Pacman simulator canvas
+# This is the ONLY unblocked, cross-origin safe full-fidelity iframe permitted in the code
 pacman_arcade_frame = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
     <iframe 
@@ -93,8 +93,6 @@ pacman_arcade_frame = """
     ></iframe>
 </div>
 """
-
-# Inject the arcade canvas safely directly inside your app window frame layout
 st.components.v1.html(pacman_arcade_frame, height=470)
 
 # --- CABINET PLAY INSTRUCTIONS ---
@@ -106,14 +104,14 @@ st.markdown("""
 3. Eat all flashing **Power Pellets** to temporarily turn the ghost matrix vulnerable!
 """)
 
-# --- DOCUMENTATION EXTENSION CORNER (UNBLOCKABLE LINK METHOD) ---
+# --- DOCUMENTATION LINK CORNER (REPLACED THE BROKEN IFRAME ENTIRELY) ---
 st.divider()
 st.subheader("📖 Arcade & Repository Manual")
 st.write("Want to fork this project on GitHub or learn how to deploy similar browser-optimized retro scripts?")
 
 col_link1, col_link2 = st.columns(2)
 with col_link1:
-    # Safe link buttons open external resources smoothly in a completely fresh browser tab to prevent connection refusals
+    # Unblockable direct link button opens a separate, clean browser window tab
     st.link_button("Open GitHub Documentation 🚀", "https://github.com", use_container_width=True)
 with col_link2:
     st.link_button("Open Streamlit Deploy Guide 📑", "https://streamlit.io", use_container_width=True)
