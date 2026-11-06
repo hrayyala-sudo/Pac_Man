@@ -74,13 +74,13 @@ with col_hud3:
     st.write("<br>", unsafe_allow_html=True)
     if st.button("🪙 INSERT TOKEN / RESET"):
         st.session_state.arcade_plays += 1
-        st.toast("Token Accepted! Cabinet initialization sequence complete.", icon="`🕹️`")
+        st.toast("Token Accepted! Cabinet initialization sequence complete.", icon="🕹️")
         st.rerun()
 
 st.write(" ")
 
 # --- OFFICIAL EMBEDDED ARCADE CABINET ENGINE ---
-# Renders a pristine cross-origin unblocked full fidelity Pacman simulator canvas 
+# This frame points directly to an unblocked, cross-origin safe full-fidelity Pacman simulator canvas
 pacman_arcade_frame = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
     <iframe 
@@ -94,7 +94,7 @@ pacman_arcade_frame = """
 </div>
 """
 
-# Inject the canvas directly into the application frame layout window
+# Inject the arcade canvas safely directly inside your app window frame layout
 st.components.v1.html(pacman_arcade_frame, height=470)
 
 # --- CABINET PLAY INSTRUCTIONS ---
@@ -113,7 +113,7 @@ st.write("Want to fork this project on GitHub or learn how to deploy similar bro
 
 col_link1, col_link2 = st.columns(2)
 with col_link1:
-    # Safe link buttons open external resources smoothly in a completely fresh browser tab
+    # Safe link buttons open external resources smoothly in a completely fresh browser tab to prevent connection refusals
     st.link_button("Open GitHub Documentation 🚀", "https://github.com", use_container_width=True)
 with col_link2:
     st.link_button("Open Streamlit Deploy Guide 📑", "https://streamlit.io", use_container_width=True)
