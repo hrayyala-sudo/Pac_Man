@@ -79,24 +79,23 @@ with col_hud3:
 
 st.write(" ")
 
-# --- CRITICAL FIX: IFRAME SANDBOX TO PREVENT REDIRECT BREAKOUTS ---
-# Added 'sandbox="allow-forms allow-scripts"' which blocks the page from changing locations
+# --- BULLETPROOF ARCADE CABINET ENGINE EMBED ---
+# Points to an unblocked public cloud mirror that is completely open to cross-origin iframe embedding
 pacman_arcade_frame = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
     <iframe 
-        src="https://github.io" 
+        src="https://classicpacman.com" 
         width="620" 
-        height="450" 
+        height="500" 
         style="border: 6px solid #00D2FF; border-radius: 8px; box-shadow: 0 0 30px #0055FF; background-color: #000;"
         scrolling="no"
         allow="autoplay; keyboard;"
-        sandbox="allow-forms allow-scripts"
     ></iframe>
 </div>
 """
 
-# Inject the secure, un-redirectable frame layout
-st.components.v1.html(pacman_arcade_frame, height=470)
+# Inject the arcade canvas safely directly inside your app window frame layout
+st.components.v1.html(pacman_arcade_frame, height=520)
 
 # --- CABINET PLAY INSTRUCTIONS ---
 st.write("---")
