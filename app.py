@@ -79,8 +79,8 @@ with col_hud3:
 
 st.write(" ")
 
-# --- OFFICIAL EMBEDDED ARCADE CABINET ENGINE ---
-# This is the ONLY unblocked, cross-origin safe full-fidelity iframe permitted in the code
+# --- CRITICAL FIX: IFRAME SANDBOX TO PREVENT REDIRECT BREAKOUTS ---
+# Added 'sandbox="allow-forms allow-scripts"' which blocks the page from changing locations
 pacman_arcade_frame = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
     <iframe 
@@ -90,9 +90,12 @@ pacman_arcade_frame = """
         style="border: 6px solid #00D2FF; border-radius: 8px; box-shadow: 0 0 30px #0055FF; background-color: #000;"
         scrolling="no"
         allow="autoplay; keyboard;"
+        sandbox="allow-forms allow-scripts"
     ></iframe>
 </div>
 """
+
+# Inject the secure, un-redirectable frame layout
 st.components.v1.html(pacman_arcade_frame, height=470)
 
 # --- CABINET PLAY INSTRUCTIONS ---
@@ -104,14 +107,13 @@ st.markdown("""
 3. Eat all flashing **Power Pellets** to temporarily turn the ghost matrix vulnerable!
 """)
 
-# --- DOCUMENTATION LINK CORNER (REPLACED THE BROKEN IFRAME ENTIRELY) ---
+# --- DOCUMENTATION LINK CORNER ---
 st.divider()
 st.subheader("📖 Arcade & Repository Manual")
 st.write("Want to fork this project on GitHub or learn how to deploy similar browser-optimized retro scripts?")
 
 col_link1, col_link2 = st.columns(2)
 with col_link1:
-    # Unblockable direct link button opens a separate, clean browser window tab
     st.link_button("Open GitHub Documentation 🚀", "https://github.com", use_container_width=True)
 with col_link2:
     st.link_button("Open Streamlit Deploy Guide 📑", "https://streamlit.io", use_container_width=True)
