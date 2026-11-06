@@ -94,7 +94,7 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
   let lastTime = 0;
   let accumulator = 0;
 
-  // Fixed 60 FPS simulation for smooth movement.
+  // Smooth 60 FPS simulation.
   const STEP = 1000 / 60;
 
   const dirs = {
@@ -132,7 +132,6 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
     const g = blankGrid();
 
-    // Outer boundary and side tunnels.
     for (let x = 0; x < COLS; x++) {
       g[0][x] = 1;
       g[ROWS - 1][x] = 1;
@@ -273,21 +272,12 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
     g[15][15] = 0;
 
 
-    // Ensure the player start pocket and ghost pen are clear.
+    // Keep the ghost pen clear.
     for (let y = 13; y <= 17; y++) {
       for (let x = 10; x <= 17; x++) {
         g[y][x] = 0;
       }
     }
-
-    // Open center exit for ghosts.
-    g[12][13] = 0;
-    g[12][14] = 0;
-    g[12][15] = 0;
-
-    g[14][0] = 0;
-    g[14][COLS - 1] = 0;
-
 
     // Connected openings.
     [
@@ -329,7 +319,7 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
       }
     }
 
-    // Keep the player spawn area clear.
+    // Keep the player start area clear.
     dots = dots.filter(
       p => !(p.x >= 12 && p.x <= 15 && p.y >= 23 && p.y <= 27)
     );
@@ -356,9 +346,6 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
 
   function resetActors() {
-
-    // Actor coordinates are tile-center coordinates.
-    // (0,0) is the center of the top-left tile.
 
     pac = {
       x: 13,
@@ -424,8 +411,6 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
   function wallAt(x, y) {
 
-    // x/y are tile indices, not pixel positions.
-
     if (
       x < 0 ||
       x >= COLS ||
@@ -450,7 +435,7 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
     const nx = x + d.x;
     const ny = y + d.y;
 
-    // The only out-of-bounds passage is the horizontal tunnel on row 14.
+    // Side tunnel is open only on row 14.
     if (
       y === 14 &&
       ny === 14 &&
@@ -557,18 +542,18 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
 
   // --------------------------------------------------
-  // PAC-MAN MOVEMENT
+  // PAC-MAN MOVEMENT - NORMAL ARCADE-STYLE SPEED
   // --------------------------------------------------
 
   function movePac() {
 
-    // Turns are buffered and can only happen at the center of a tile.
+    // Turns are buffered and happen at tile centers.
     if (atNode(pac)) {
 
       pac.x = snap(pac.x);
       pac.y = snap(pac.y);
 
-      // Turn only if the requested corridor is open.
+      // Turn only when the requested corridor is open.
       if (
         pac.want &&
         canGo(pac.x, pac.y, pac.want)
@@ -576,7 +561,7 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
         pac.dir = pac.want;
       }
 
-      // Stop if the next tile is a wall.
+      // Stop before entering a wall.
       if (
         !pac.dir ||
         !canGo(pac.x, pac.y, pac.dir)
@@ -592,14 +577,13 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
     const d = dirs[pac.dir];
 
-    // Faster movement: 0.105 tiles per simulation frame.
-    // Movement is only started after checking the next tile.
-    pac.x += d.x * 0.105;
-    pac.y += d.y * 0.105;
+    // Normal Pac-Man speed: not turbo.
+    pac.x += d.x * 0.075;
+    pac.y += d.y * 0.075;
 
     wrapTunnel(pac);
 
-    mouthPhase += 0.38;
+    mouthPhase += 0.28;
   }
 
 
@@ -728,9 +712,10 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
 
       const d = dirs[g.dir];
 
+      // Normal ghost speed, slightly slower than Pac-Man.
       const speed = g.returning
-        ? 0.14
-        : (Date.now() < frightenedUntil ? 0.055 : 0.075);
+        ? 0.09
+        : (Date.now() < frightenedUntil ? 0.045 : 0.055);
 
       g.x += d.x * speed;
       g.y += d.y * speed;
@@ -834,7 +819,6 @@ background:#000;padding:12px;border:3px solid #253cff;box-sizing:border-box;">
     }
 
 
-    // Move to the next level when all pellets are collected.
     if (
       dots.length === 0 &&
       powerDots.length === 0
@@ -1462,6 +1446,6 @@ st.components.v1.html(
 )
 
 st.caption(
-    "This is an original browser-based arcade-style recreation with classic Pac-Man "
-    "mechanics and a 28 × 31 maze. It does not use the original arcade ROM or proprietary assets."
+    "Arcade-style Pac-Man recreation with normal movement speed, "
+    "wall collision, ghosts, pellets, power pellets, and scoring."
 )
